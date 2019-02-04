@@ -6,6 +6,82 @@
         <script src="mux.js"></script>
         <script>
 
+            'use strict';
+            var $ = document.querySelector.bind(document);
+            var sourceBuffer;
+
+            var sources = ["/ts/001.ts","/ts/002.ts", "/ts/003.ts", "/ts/004.ts"];
+            var index = 0;
+
+            function init() {
+                var video = document.createElement('video');
+                video.controls = true;
+                var mediaSource = new MediaSource();
+                video.src = URL.createObjectURL(mediaSource);
+
+                $('#video-place').innerHTML = '';
+                $('#video-place').appendChild(video);
+
+                mediaSource.addEventListener('sourceopen', function() {
+                    mediaSource.duration = 0;
+                    var mimeCodec = 'video/mp4;codecs="avc1.64001f,mp4a.40.5"';
+                    sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+
+                });
+
+                mediaSource.addEventListener('onsourceended', function() {
+
+                    console.log("onsourceended");
+
+                });
+
+                mediaSource.addEventListener('onsourceclose', function() {
+                    console.log("onsourceclose");
+                });
+
+                var oReq = new XMLHttpRequest();
+
+                function loadNext() {
+                    if (index < sources.length) {
+                        oReq.open("GET", sources[index], true);
+                        oReq.responseType = "arraybuffer";
+                        oReq.onload = onreq_load;
+                        oReq.send();
+
+                    }
+
+                    index++;
+                }
+
+                var transmuxer = new muxjs.mp4.Transmuxer({
+                    remux: true
+                });
+                transmuxer.on('data', transmuxer_data);
+                transmuxer.on('done', transmuxer_done);
+
+                function onreq_load(oEvent) {
+                    transmuxer.push(new Uint8Array(oEvent.target.response));
+                    transmuxer.flush();
+                }
+                ;
+                function transmuxer_data(event) {
+
+                    var c = new Uint8Array(event.data.length + event.initSegment.length);
+                    c.set(event.initSegment);
+                    c.set(event.data, event.initSegment.length);
+
+                    sourceBuffer.appendBuffer(c);
+
+                }
+
+                function transmuxer_done() {
+                    loadNext();
+                }
+                ;
+                loadNext();
+
+            }
+        </script>
     </head>
     <body onload="init()">
         <div id="video-place"></div>
