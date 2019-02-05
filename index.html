@@ -2,10 +2,9 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Title</title>
+        <title>MY HTML5 Video player</title>
         <script src="mux.js"></script>
         <script>
-
             'use strict';
             var $ = document.querySelector.bind(document);
             var sourceBuffer;
@@ -28,7 +27,6 @@
                     sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
 
                 });
-
                 mediaSource.addEventListener('onsourceended', function() {
 
                     console.log("onsourceended");
@@ -38,7 +36,6 @@
                 mediaSource.addEventListener('onsourceclose', function() {
                     console.log("onsourceclose");
                 });
-
                 var oReq = new XMLHttpRequest();
 
                 function loadNext() {
