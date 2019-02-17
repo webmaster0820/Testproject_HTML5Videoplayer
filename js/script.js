@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>MY HTML5 Video player</title>
-    <script src="./js/mux.js"></script>
-    <script src="./js/aes.js"></script>
-    <script src="./js/jquery.js"></script>
-    <link href="./css/bootstrap.css" rel="stylesheet" />
-    <script>
-        'use strict';
+'use strict';
         //var $ = document.querySelector.bind(document);
         var sourceBuffer;
 
@@ -124,7 +113,7 @@
             video.src = URL.createObjectURL(mediaSource);
 
             $('#video-place').html("");
-            $('#video-place').append(video);
+            setTimeout(() => { $('#video-place').append(video) }, 5000);
 
             mediaSource.addEventListener('sourceopen', function () {
                 mediaSource.duration = 0;
@@ -190,39 +179,3 @@
                 });
             });
         });
-    </script>
-</head>
-
-<body onload="init()">
-    <div class="vpControl">
-        <div class="form-group"><label for="media_id">Start Time :</label>
-            <input class="form-control" name="media_id" id="media_id" value="29F512FB-5759-488A-914B-4FB70639CB">
-        </div>
-        <label for="start_dateTm">Start Time:
-            <input type="datetime-local" class="form-control" step="1" name="start_dateTm" id="start_dateTm"
-                value="2019-02-15T12:15:23">
-        </label>
-        <label for="end_dateTm">End Time :<input class="form-control" type="datetime-local" step="1" name="end_dateTm"
-                id="end_dateTm" value="2019-02-15T12:17:23">
-        </label>
-        <select id="quality" name="quality" class="form-control" style="width:15%;display: inline;">
-            <option value="HD">High</option>
-            <option value="HQ">Medium</option>
-            <option value="LQ" selected>Low</option>
-        </select>
-        <select id="server_url_no" name="server_url_no" class="form-control" style="width:55%;display: inline;">
-            <option value="0">https://sanjose.nagacdn.com</option>
-            <option value="1">https://washington.nagacdn.com</option>
-            <option value="2">https://dallas.nagacdn.com</option>
-            <option value="3">https://houston.nagacdn.com</option>
-            <option value="4">https://sydney.nagacdn.com</option>
-            <option value="5">https://tokyo.nagacdn.com</option>
-            <option value="6">https://singapore.nagacdn.com</option>
-        </select>
-        <button type="button" class="float-right btn btn-primary" id="startBtn">Start</button>
-    </div>
-    <div id="video-place">
-    </div>
-</body>
-
-</html>
