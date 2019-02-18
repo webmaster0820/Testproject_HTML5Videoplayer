@@ -13,23 +13,24 @@
     <link rel="stylesheet" type="text/css" media="screen" href="./css/bootstrap-datetimepicker.css">
     <script type="text/javascript" src="./js/jquery.js"></script>
     <script type="text/javascript" src="./js/bootstrap.js"></script>
-    </head>
+</head>
 
 <body onload="init()" style="padding: 40px">
     <div class="vpControl">
         <div class="form-group">
-            <input class="form-control" name="media_id" id="media_id" value="29F512FB-5759-488A-914B-4FB70639CB" style="width:800px">
+            <input class="form-control" name="media_id" id="media_id" value="29F512FB-5759-488A-914B-4FB70639CB"
+                style="width:800px">
         </div><br>
         <div class="input-append date datetimepicker inline" style="display: inline;">
-            <input data-format="yyyy-MM-dd hh:mm:ss" type="text" id="start_dateTm"  value="2019-02-15 12:15:00"> </input>
+            <input data-format="yyyy-MM-dd hh:mm:ss" type="text" id="start_dateTm" value="2019-02-15 12:15:00"> </input>
             <span class="add-on">
                 <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                 </i>
             </span>
         </div>
-        
+
         <div class="input-append date datetimepicker inline" style="display: inline;">
-            <input data-format="yyyy-MM-dd hh:mm:ss" type="text"  id="end_dateTm" value="2019-02-15 12:16:00"></input>
+            <input data-format="yyyy-MM-dd hh:mm:ss" type="text" id="end_dateTm" value="2019-02-15 12:16:00"></input>
             <span class="add-on">
                 <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                 </i>
@@ -53,11 +54,22 @@
     </div>
     <div id="video-place">
     </div>
+    <div id='controls'>
+            <progress id='progress-bar' min='0' max='100' value='0'>0% played</progress>
+            <button id='btnReplay' class='replay' title='replay' accesskey="R" onclick='replayVideo();'>Replay</button>
+            <button id='btnPlayPause' class='play' title='play' accesskey="P" onclick='playPauseVideo();'>Play</button>
+            <button id='btnStop' class='stop' title='stop' accesskey="X" onclick='stopVideo();'>Stop</button>
+            <input type='range' id='volume-bar' title="volume" min='0' max='1' step='0.1' value='1'>
+            <button id='btnMute' class='mute' title='mute' onclick='muteVolume();'>Mute</button>
+            <button id='btnFullScreen' class='fullscreen' title='toggle full screen' accesskey="T"
+                onclick='toggleFullScreen();'>[ ]</button>
+        </div>
+
 </body>
 
-<script type="text/javascript" src="./js/bootstrap-datetimepicker.js"></script> 
+<script type="text/javascript" src="./js/bootstrap-datetimepicker.js"></script>
 
-<script type="text/javascript" src="./js/bootstrap-datetimepicker_002.js"></script> 
+<script type="text/javascript" src="./js/bootstrap-datetimepicker_002.js"></script>
 
 
 <script src="./js/respond.js"></script>
@@ -69,6 +81,14 @@
             language: 'pt-BR'
         });
     });
+
+    player = document.getElementById('video-element');
+ 
+// Update the video volume
+volumeBar.addEventListener("change", function(evt) {
+    //the event target is the volumeBar
+    player.volume = evt.target.value;
+});
 </script>
 
 </html>

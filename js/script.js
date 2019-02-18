@@ -63,11 +63,8 @@ const onreq_load = (oEvent) => {
 }
 const transmuxer_data = (event) => {
     var c = new Uint8Array(event.data.length + event.initSegment.length);
-
     c.set(event.initSegment);
-    // console.log(event.initSegment);
     c.set(event.data, event.initSegment.length);
-    // console.log("-------Append buffer", c, index, event.initSegment);
     loadedData[index++] = c;
 }
 
@@ -79,10 +76,7 @@ var video, mediaSource;
 
 const appendVideoData = () => {
     if (played_index < index && !sourceBuffer.updating) {
-        // console.log("------player", played_index, index, loadedData[played_index]);
-        // console.log(mediaSource, sourceBuffer);
         sourceBuffer.appendBuffer(loadedData[played_index++]);
-        // video.play();
         setTimeout(appendVideoData, 3000);
     } else setTimeout(appendVideoData, 100);
 }
